@@ -97,7 +97,9 @@ export function createTripElementFrom(trip) {
 
 				<a class="email-button" href="mailto: info@feelingair.com.ar?subject=${makeEmailSubject(
           trip
-        )}&body=${makeEmailBody(trip)}">Contactar por este vuelo ✉️</a>
+        )}">
+					Contactar por este vuelo ✉️
+				</a>
 			</details>
 
 
@@ -126,8 +128,4 @@ export function createTripElementFrom(trip) {
 
 function makeEmailSubject(trip) {
   return `Consulta por vuelo de ${trip.origin} a ${trip.destination} el ${trip.date_from}`;
-}
-
-function makeEmailBody(trip) {
-  return `Hola, me interesa saber más sobre el vuelo de ${trip.origin} a ${trip.destination} el ${trip.date_from}.\n\nGracias!`;
 }
