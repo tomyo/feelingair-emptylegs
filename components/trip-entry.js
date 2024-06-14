@@ -24,7 +24,7 @@ export function createTripElementFrom(trip) {
 					<div class="date">
 						${
               trip.date_from != trip.date_to
-                ? `<input type="date" value="${trip.date_from}" disabled>`
+                ? `<input type="date" value="${trip.date_from}" disabled readonly>`
                 : ""
             }
 						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -35,7 +35,7 @@ export function createTripElementFrom(trip) {
 								<path d="M20.5 20.5L22 22" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
 								<path d="M21.5 9H16.625H10.75M2 9H5.875" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
 						</svg>
-						<input type="date" value="${trip.date_to}" disabled>
+						<input type="date" value="${trip.date_to}" disabled readonly>
 					</div>
 					<div>
 						<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-airplane" viewBox="0 0 16 16" transform="rotate(55)">
