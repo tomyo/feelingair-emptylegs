@@ -95,10 +95,31 @@ export function createTripElementFrom(trip) {
 					</div>
 				</summary>
 
-				<a href="mailto: info@feelingair.com.ar?subject=${makeEmailSubject(
+				<a class="email-button" href="mailto: info@feelingair.com.ar?subject=${makeEmailSubject(
           trip
-        )}?body=${makeEmailBody(trip)}">Contactar por este vuelo ✉️</a>
+        )}&body=${makeEmailBody(trip)}">Contactar por este vuelo ✉️</a>
 			</details>
+
+
+				<style>
+					.email-button {
+						display: inline-block;
+						background-color: #4CAF50; /* Green */
+						border-radius: 2px;
+						color: white;
+						text-align: center;
+						text-decoration: none;
+						font-size: 16px;
+						margin: 4px 2px;
+						cursor: pointer;
+						padding: 15px 32px;
+						transition-duration: 0.4s;
+					}
+
+					.email-button:hover {
+						background-color: #45a049;
+					}
+				</style>
 	  `;
   return tripElement;
 }
