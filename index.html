@@ -62,6 +62,10 @@
           box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
           min-width: min-content;
 
+          summary::-webkit-details-marker {
+            display: none;
+          }
+
           summary {
             --columns: 7;
             display: grid;
@@ -69,7 +73,14 @@
             align-items: center;
             gap: 1rem;
             cursor: pointer;
-            margin-block-end: 1rem;
+            margin-block: 1rem;
+
+            input[type="date"] {
+              -webkit-appearance: none;
+              background: transparent;
+              width: min-content;
+              border: none;
+            }
 
             p {
               margin: 0;
