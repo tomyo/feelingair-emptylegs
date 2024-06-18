@@ -5,8 +5,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script type="module" src="/components/trip-entry-slim.js"></script>
-
-    <title>FeelingAir 🪹🦵</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛩</text></svg>"
+    />
+    <title>🪹🦵 FeelingAir</title>
 
     <style>
       /* Reset */
@@ -22,6 +25,7 @@
         font-size: 100%;
         line-height: 1.25;
         scroll-behavior: smooth;
+        color: currentColor;
       }
 
       /* Global styles */
@@ -44,7 +48,7 @@
   </head>
   <body>
     <header>
-      <h2>FeelingAir 🪹🦵</h2>
+      <img src="/assets/images/feelingair.svg" />
 
       <style>
         header {
@@ -54,12 +58,14 @@
       </style>
     </header>
     <main>
-      <section id="trips"></section>
+      <section id="trips">
+        <p style="text-align: center">...</p>
+      </section>
     </main>
 
     <style>
-      h2 {
-        margin-top: 2rem;
+      header {
+        padding: 2rem;
       }
 
       #trips {
@@ -67,22 +73,24 @@
         flex-flow: column nowrap;
         max-width: 90ch;
         margin-inline: auto;
-      }
 
-      trip-entry:hover,
-      trip-entry[open] {
-        background-color: var(--hover-bg-color);
+        trip-entry:hover,
+        trip-entry[open] {
+          background-color: var(--hover-bg-color);
+        }
       }
     </style>
   </body>
 
   <script type="module">
     import { getSheetData } from "/get-trips.js";
-
     const tripsElement = document.getElementById("trips");
+    const fetchedTrips = await getSheetData();
     const now = new Date();
 
-    for (const trip of await getSheetData()) {
+    tripsElement.innerHTML = ""; /* Clear loading message */
+
+    for (const trip of fetchedTrips) {
       if (!trip.reviewed) {
         console.info("Omitting unreviewed entry:", trip);
         continue;
