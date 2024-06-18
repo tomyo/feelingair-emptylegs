@@ -13,6 +13,8 @@ customElements.define(
     connectedCallback() {
       this.addStyles();
       if (this.data) this.render();
+
+      this.shadowRoot.querySelector("details").addEventListener("toggle", this);
     }
 
     /**
@@ -110,7 +112,6 @@ customElements.define(
     addStyles() {
       styles = new CSSStyleSheet();
       styles.replace(/*css*/ `
-
         :host {
           --visible-elements: 3;
           --padding: 0.5rem 1rem;
@@ -122,11 +123,6 @@ customElements.define(
           box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
           min-width: min-content;
           text-align: center; /* Center CTA button */
-
-          &:hover,
-          &:has(details[open]) {
-            background-color: var(--hover-bg-color);
-          }
 
           details[open] {
             > summary {
@@ -240,6 +236,12 @@ customElements.define(
 
       this.shadowRoot.adoptedStyleSheets.push(styles);
       console.info("pushed styles", styles);
+    }
+
+    handleEvent(event) {
+      if (event.type === "toggle") {
+        this.toggleAttribute("open", event.target.open);
+      }
     }
   }
 );
