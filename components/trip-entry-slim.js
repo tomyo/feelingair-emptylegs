@@ -100,10 +100,10 @@ customElements.define(
           </div>
         </summary>
 
-        <a class="email-button" href="mailto: info@feelingair.com.ar?subject=${makeEmailSubject(
+        <a part="button" href="mailto: info@feelingair.com.ar?subject=${makeEmailSubject(
           trip
         )}">
-          Contactar por este vuelo ✉️
+          Contactar por este vuelo
         </a>
       </details>
     `;
@@ -213,24 +213,6 @@ customElements.define(
           &::-webkit-details-marker {
             display: none;
           }
-        }
-        
-        .email-button {
-          display: inline-block;
-          background-color: #4CAF50; /* Green */
-          border-radius: 2px;
-          color: white;
-          text-align: center;
-          text-decoration: none;
-          font-size: 16px;
-          margin: 1rem 2px;
-          cursor: pointer;
-          padding: 15px 32px;
-          transition-duration: 0.4s;
-        }
-
-        .email-button:hover {
-          background-color: #45a049;
         }
       `);
 
