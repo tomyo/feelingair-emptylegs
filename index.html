@@ -4,6 +4,7 @@
     <meta name="theme-color" content="#336587" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" src="/components/trip-entry-slim.js"></script>
 
     <title>FeelingAir 🪹🦵</title>
 
@@ -57,16 +58,21 @@
     </main>
 
     <style>
+      h2 {
+        margin-top: 2rem;
+      }
+
       #trips {
         display: flex;
         flex-flow: column nowrap;
+        max-width: 90ch;
+        margin-inline: auto;
       }
     </style>
   </body>
 
   <script type="module">
     import { getSheetData } from "/get-trips.js";
-    import { createTripElementFrom } from "/components/trip-entry.js";
 
     const tripsElement = document.getElementById("trips");
     const now = new Date();
@@ -77,7 +83,8 @@
         continue;
       }
 
-      const tripElement = createTripElementFrom(trip);
+      const tripElement = document.createElement("trip-entry");
+      tripElement.data = trip;
       tripsElement.appendChild(tripElement);
     }
   </script>
