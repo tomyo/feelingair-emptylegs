@@ -7,11 +7,11 @@ customElements.define(
   "trip-entry",
   class extends HTMLElement {
     constructor() {
-      super();
+      super().attachShadow({ mode: "open" });
     }
 
     connectedCallback() {
-      if (!styles) this.addStyles();
+      this.addStyles();
       if (this.data) this.render();
     }
 
@@ -21,7 +21,7 @@ customElements.define(
     render() {
       const trip = this.data;
 
-      this.innerHTML = /*html*/ `
+      this.shadowRoot.innerHTML = /*html*/ `
         <details>
         <summary>
           <div class="date">
@@ -34,7 +34,7 @@ customElements.define(
                 <path d="M21.5 9H16.625H10.75M2 9H5.875" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
             </svg>
             ${
-              trip.date_from != trip.date_to
+              trip.date_to && trip.date_from != trip.date_to
                 ? `<input type="date" value="${trip.date_from}" disabled readonly> ~    `
                 : ""
             }
@@ -110,10 +110,11 @@ customElements.define(
     addStyles() {
       styles = new CSSStyleSheet();
       styles.replace(/*css*/ `
-        trip-entry {
-          --visible-elements: 3;
 
+        :host {
+          --visible-elements: 3;
           --padding: 0.5rem 1rem;
+          display: block;
           padding: var(--padding);
           margin: 1rem;
           border-radius: 0.5rem;
@@ -126,7 +127,6 @@ customElements.define(
           &:has(details[open]) {
             background-color: var(--hover-bg-color);
           }
-
 
           details[open] {
             > summary {
@@ -238,7 +238,7 @@ customElements.define(
         }
       `);
 
-      document.adoptedStyleSheets.push(styles);
+      this.shadowRoot.adoptedStyleSheets.push(styles);
       console.info("pushed styles", styles);
     }
   }
