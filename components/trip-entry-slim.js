@@ -200,6 +200,11 @@ customElements.define(
               font-family: inherit;
               font-size: inherit;
               color: inherit;
+
+              &:disabled {
+                /* Allow click on parent to toggle details open/close */
+                pointer-events:none;
+              }
             }
             
             p {
