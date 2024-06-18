@@ -104,6 +104,79 @@ export function createTripElementFrom(trip) {
 
 
 				<style>
+					trip-entry {
+						padding: 1rem;
+						margin: 1rem;
+						border-radius: 0.5rem;
+						background-color: #fff;
+						box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+						min-width: min-content;
+						text-align: center; /* Center CTA button */
+
+						&:hover,
+						&:has(details[open]) {
+							background-color: var(--hover-bg-color);
+						}
+
+						details[open] > summary > :not(:nth-child(-n + 4)) {
+							display: var(--display);
+						}
+					}
+
+					summary::-webkit-details-marker {
+						display: none;
+					}
+
+					summary {
+						--columns: 4;
+						display: grid;
+						grid-template-columns: repeat(var(--columns), 1fr);
+
+						grid-auto-rows: 1fr;
+						align-items: center;
+						column-gap: 1rem;
+						row-gap: 2rem;
+						cursor: pointer;
+						margin-block: 1rem;
+						align-items: start;
+
+						@media (640px < width) {
+							--columns: 7;
+						}
+
+						input[type="date"] {
+							-webkit-appearance: none; /* Remove arrow in chrome mobile */
+							background: transparent;
+							width: min-content;
+							border: none;
+							padding: 0;
+
+							font-family: inherit;
+							font-size: inherit;
+							color: inherit;
+						}
+
+						p {
+							margin: 0;
+							text-align: center;
+							margin-block: 2px;
+						}
+
+						> * {
+							--display: flex;
+							display: var(--display);
+							flex-flow: column nowrap;
+							align-items: center;
+							gap: 0.5rem;
+
+							@media (width < 640px) {
+								&:not(:nth-child(-n + 4)) {
+									display: none;
+								}
+							}
+						}
+					}
+					
 					.email-button {
 						display: inline-block;
 						background-color: #4CAF50; /* Green */
