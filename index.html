@@ -83,6 +83,11 @@
     const now = new Date();
 
     for (const trip of await getSheetData()) {
+      if (!trip.reviewed) {
+        console.info("Omitting unreviewed entry:", trip);
+        continue;
+      }
+
       if (new Date(trip.date_from) < now) {
         console.info("Omitting old entry:", trip);
         continue;
