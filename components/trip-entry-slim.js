@@ -242,5 +242,8 @@ export function createTripElementFrom(trip) {
 }
 
 function makeEmailSubject(trip) {
-  return `Consulta por vuelo de ${trip.origin} a ${trip.destination} el ${trip.date_from}`;
+  const date =
+    trip.date_from +
+    (trip.date_to != trip.date_from ? ` ~ ${trip.date_to}` : "");
+  return `Consulta por vuelo de ${trip.origin} a ${trip.destination} el ${date}`;
 }
