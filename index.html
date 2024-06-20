@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es-AR">
   <head>
-    <meta name="theme-color" content="#336587" />
+    <meta name="theme-color" content="#3c769f" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script type="module" src="/components/trip-entry-slim.js"></script>
@@ -25,10 +25,21 @@
         font-size: 100%;
         line-height: 1.25;
         scroll-behavior: smooth;
-        color: currentColor;
+        color-scheme: dark light;
       }
 
       /* Global styles */
+
+      :root {
+        --brand-color: #3c769f;
+        --color: #222222;
+        --background-color: color-mix(in srgb, var(--brand-color) 15%, white);
+
+        @media (prefers-color-scheme: dark) {
+          --color: #f5f5f5;
+          --background-color: var(--brand-color);
+        }
+      }
 
       @font-face {
         font-family: "Objective";
@@ -38,46 +49,11 @@
         font-display: swap;
       }
 
-      :root {
-        --base-dark: #222222;
-        --base-light: #f5f5f5;
-        --brand-color: hsl(205, 45%, 43%);
-        --brand-color-light: color-mix(
-          in srgb,
-          var(--brand-color) 40%,
-          var(--base-light)
-        );
-        --brand-color-dark: color-mix(
-          in srgb,
-          var(--brand-color) 40%,
-          var(--base-dark)
-        );
-
-        --main-color: var(--base-dark);
-        --bg-color: var(--base-light);
-        --mix-color: var(--brand-color-dark);
-
-        --accent-color: color-mix(in srgb, var(--mix-color) 90%, transparent);
-        --hover-bg-color: color-mix(
-          in srgb,
-          var(--mix-color) 15%,
-          var(--bg-color)
-        );
-
-        @media (prefers-color-scheme: dark) {
-          --main-color: var(--base-light);
-          --bg-color: var(--brand-color);
-          --mix-color: var(--brand-color-light);
-        }
-      }
-
       body {
-        font-family: Objective, system-ui, -apple-system, BlinkMacSystemFont,
-          "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
-          "Helvetica Neue", sans-serif;
-        background-color: var(--bg-color);
-        color: var(--main-color);
-        accent-color: var(--accent-color);
+        font-family: Objective, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        background-color: var(--background-color);
+        color: var(--color);
       }
     </style>
   </head>
@@ -111,12 +87,12 @@
 
         trip-entry:hover,
         trip-entry[open] {
-          background-color: var(--hover-bg-color);
-          box-shadow: none;
+          background-color: color-mix(in srgb, currentcolor 7%, transparent);
+          transition-duration: 0.2s;
         }
 
         trip-entry {
-          --theme-color: var(--accent-color);
+          box-shadow: color-mix(in srgb, currentcolor, transparent) 0px 0px 0.6rem;
 
           &::part(button) {
             display: inline-block;
@@ -129,10 +105,10 @@
             margin: 1rem 2px;
             cursor: pointer;
             padding: 1rem 1.5rem;
-            transition-duration: 0.4s;
+            transition-duration: 0.2s;
           }
           &::part(button):hover {
-            background-color: var(--hover-bg-color);
+            background-color: color-mix(in srgb, currentColor 10%, transparent);
           }
         }
       }

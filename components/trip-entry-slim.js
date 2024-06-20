@@ -119,7 +119,6 @@ customElements.define(
           padding: var(--padding);
           margin: 1rem;
           border-radius: 0.5rem;
-          box-shadow: color-mix(in srgb, var(--theme-color, currentcolor), transparent) 0px 0px 2rem;
           min-width: min-content;
           text-align: center; /* Center CTA button */
 
@@ -186,7 +185,7 @@ customElements.define(
             }
 
             svg {
-              color: var(--theme-color, currentColor);
+              color: color-mix(in srgb, currentColor 60%, transparent);
             }
             
             input[type="date"] {
