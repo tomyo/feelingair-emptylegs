@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script type="module" src="/components/trip-entry-slim.js"></script>
+    <script type="module" src="/components/theme-switch.js"></script>
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛩</text></svg>"
@@ -74,23 +75,10 @@
   </head>
   <body>
     <header>
-      <img src="/assets/images/feelingair.svg" alt="FeelingAir" id="logo" />
-      <button id="themeSwitch" title="Toggle dark and light theme">
+      <img id="logo" src="/assets/images/feelingair.svg" alt="FeelingAir" />
+      <theme-switch>
         <img src="/assets/images/theme-switch.png" width="15px" height="15px" />
-      </button>
-      <script>
-        const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
-
-        // React to theme changes on user's system preference
-        prefersDarkScheme.onchange = (e) => (root.dataset.theme = e.matches ? "🌑" : "☀️");
-
-        // React on user toggling the current theme
-        themeSwitch.onclick = () =>
-          (root.dataset.theme = root.dataset.theme === "☀️" ? "🌑" : "☀️");
-
-        // Choose initial theme is chosen based on user's system preference
-        if (!root.dataset.theme) root.dataset.theme = prefersDarkScheme.matches ? "🌑" : "☀️";
-      </script>
+      </theme-switch>
     </header>
     <main>
       <section id="trips">
@@ -99,25 +87,22 @@
     </main>
 
     <style>
+      theme-switch {
+        position: absolute;
+        top: max(1.5rem, 5vmin);
+        right: max(1.5rem, 7vmin);
+      }
+
       :root[data-theme="🌑"] {
         #logo,
-        #themeSwitch {
+        theme-switch {
           filter: invert(1);
         }
       }
+
       header {
         text-align: center;
         margin: 2rem;
-        position: relative;
-
-        button {
-          position: absolute;
-          top: -1rem;
-          right: -1rem;
-          border: none;
-          background: transparent;
-          cursor: pointer;
-        }
       }
 
       #trips {
