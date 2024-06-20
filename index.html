@@ -99,8 +99,11 @@
     </main>
 
     <style>
-      :root[data-theme="🌑"] #logo {
-        filter: invert(1);
+      :root[data-theme="🌑"] {
+        #logo,
+        #themeSwitch {
+          filter: invert(1);
+        }
       }
       header {
         text-align: center;
