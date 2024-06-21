@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Empty legs, last-minute opportunities from FeelingAir" />
     <script type="module" src="/components/trip-entry-slim.js"></script>
-    <script type="module" src="/components/theme-switch.js"></script>
+    <script type="module" src="/components/theme-toggle.js"></script>
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛩</text></svg>"
@@ -77,9 +77,9 @@
     <header>
       <img id="logo" src="/assets/images/feelingair.svg" alt="FeelingAir" />
       <h6 style="font-weight: 400">EMPTY LEGS</h6>
-      <theme-switch>
-        <img src="/assets/images/theme-switch.png" width="15px" height="15px" />
-      </theme-switch>
+      <theme-toggle>
+        <img src="/assets/images/theme-toggle.png" width="15px" height="15px" />
+      </theme-toggle>
     </header>
     <main>
       <section id="trips">
@@ -88,7 +88,7 @@
     </main>
 
     <style>
-      theme-switch {
+      theme-toggle {
         position: absolute;
         cursor: pointer;
         top: max(1.5rem, 5vmin);
@@ -97,7 +97,7 @@
 
       :root[data-theme="🌑"] {
         #logo,
-        theme-switch {
+        theme-toggle {
           filter: invert(1);
         }
       }
