@@ -37,8 +37,7 @@ function table_to_objects(gsheet_array) {
     for (let index_value = 0; index_value < row.length; index_value++) {
       // get each value and assign it as a value to the respective key
       const value = row[index_value];
-      temp_object[gsheet_array[index_keys][index_value]] =
-        gsheet_array[row_values][index_value];
+      temp_object[gsheet_array[index_keys][index_value]] = gsheet_array[row_values][index_value];
     }
 
     // append the current temporary object to the final array of objects
@@ -53,9 +52,7 @@ async function getSheetData() {
   var id = "1OjH0hVkrL52ahV-aNphRq4byh1hupthlbLTCo1zqnio";
   var gid = "1480064397";
   var txt = await (
-    await fetch(
-      `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&tq?gid=${gid}`
-    )
+    await fetch(`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&tq?gid=${gid}`)
   ).text();
 
   var jsonString = txt.match(/(?<="table":).*(?=}\);)/g)[0];
