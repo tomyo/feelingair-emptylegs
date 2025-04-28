@@ -59,13 +59,18 @@ async function getSheetData() {
   var json = JSON.parse(jsonString);
   var table = [];
   var row = [];
+  const dateRegexp = /Date\((.*)\)/;
   json.cols.forEach((colonne) => row.push(colonne.label));
   table.push(row);
   json.rows.forEach((r) => {
     var row = [];
     r.c.forEach((cel) => {
       try {
-        var value = cel.f ? cel.f : cel.v;
+        if (cel.f && cel.v && typeof cel.v == "string" && cel.v.startsWith("Date(")) {
+          value = new Date(...dateRegexp.exec(cel.v)[1].split(",")).toISOString().split("T")[0];
+        } else {
+          value = cel.v || cel.f;
+        }
       } catch (e) {
         var value = "";
       }
