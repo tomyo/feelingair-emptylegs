@@ -154,7 +154,7 @@
     tripsElement.innerHTML = ""; /* Clear loading message */
 
     for (const trip of fetchedTrips) {
-      if (!trip.reviewed) {
+      if (trip.hidden) {
         console.info("Omitting unreviewed entry:", trip);
         continue;
       }
