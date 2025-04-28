@@ -35,10 +35,10 @@ customElements.define(
                 <path d="M20.5 20.5L22 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                 <path d="M21.5 9H16.625H10.75M2 9H5.875" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
             </svg>
-            <input type="date" value="${trip.date_from}" disabled readonly>
+            <input type="date" value="${trip.date_from_min}" disabled readonly>
             ${
-              trip.date_to && trip.date_from != trip.date_to
-                ? `~ <input type="date" value="${trip.date_to}" disabled readonly>`
+              trip.date_from_max && trip.date_from_min != trip.date_from_max
+                ? `~ <input type="date" value="${trip.date_from_max}" disabled readonly>`
                 : ""
             }
           </div>

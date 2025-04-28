@@ -159,9 +159,20 @@
         continue;
       }
 
-      if (new Date(trip.date_from) < now) {
-        console.info("Omitting old entry:", trip);
+      if (!trip.date_from_min || !trip.date_from_max) {
+        console.warn("Missing date range:", trip);
         continue;
+      }
+      if (trip.date_from_max) {
+        if (new Date(trip.date_from_max) < now) {
+          console.info("Omitting old entry:", trip);
+          continue;
+        }
+      } else {
+        if (new Date(trip.date_from_min) < now) {
+          console.info("Omitting old entry:", trip);
+          continue;
+        }
       }
 
       const tripElement = document.createElement("trip-entry");
