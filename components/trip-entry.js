@@ -98,6 +98,9 @@ customElements.define(
             </svg>
             <p>${trip.can_land_in || "-"}</p>
           </div>
+          <div>
+            ${trip.min_price_usd ? `Desde U$${trip.min_price_usd}` : ""}
+          </div>
         </summary>
 
         <a part="button" href="mailto: info@feelingair.com.ar?subject=${makeEmailSubject(trip)}">
