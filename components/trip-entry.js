@@ -103,7 +103,9 @@ customElements.define(
           </div>
         </summary>
 
-        <a part="button" href="mailto: info@feelingair.com.ar?subject=${makeEmailSubject(trip)}">
+        <a part="button" href="https://api.whatsapp.com/send?phone=+5493525457917&text=${makeMsgIntroduction(
+          trip
+        )}">
           Contactar por este vuelo
         </a>
       </details>
@@ -240,7 +242,8 @@ export function createTripElementFrom(trip) {
   return tripElement;
 }
 
-function makeEmailSubject(trip) {
-  const date = trip.date_from + (trip.date_to != trip.date_from ? ` ~ ${trip.date_to}` : "");
-  return `Consulta por vuelo de ${trip.origin} a ${trip.destination} el ${date}`;
+function makeMsgIntroduction(trip) {
+  const date =
+    trip.date_from_min + (trip.date_from_max != trip.date_from_min ? ` ~ ${trip.date_from_max}` : "");
+  return `Hola! Estoy interesado en el vuelo de ${trip.origin} a ${trip.destination} el ${date}`;
 }
