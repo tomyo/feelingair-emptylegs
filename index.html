@@ -159,18 +159,18 @@
         continue;
       }
 
-      if (!trip.date_from_min || !trip.date_from_max) {
-        console.warn("Missing date range:", trip);
+      if (!trip.date_from_min) {
+        console.warn("Missing `date_from_min`:", trip);
         continue;
       }
       if (trip.date_from_max) {
         if (new Date(trip.date_from_max) < now) {
-          console.info("Omitting old entry:", trip);
+          console.info("Omitting by `date_from_max:", trip);
           continue;
         }
       } else {
         if (new Date(trip.date_from_min) < now) {
-          console.info("Omitting old entry:", trip);
+          console.info("Omitting by `date_from_min`:", trip);
           continue;
         }
       }
