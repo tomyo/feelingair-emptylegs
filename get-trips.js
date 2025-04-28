@@ -48,6 +48,11 @@ function table_to_objects(gsheet_array) {
   return final_object;
 }
 
+function parseDuration(hours, minutes) {
+  const durationFormatter = new Intl.DurationFormat("es-AR", { style: "narrow" });
+  return durationFormatter.format({ hours, minutes });
+}
+
 async function getSheetData() {
   var id = "1OjH0hVkrL52ahV-aNphRq4byh1hupthlbLTCo1zqnio";
   var gid = "1480064397";
@@ -67,7 +72,14 @@ async function getSheetData() {
     r.c.forEach((cel) => {
       try {
         if (cel.f && cel.v && typeof cel.v == "string" && cel.v.startsWith("Date(")) {
-          value = new Date(...dateRegexp.exec(cel.v)[1].split(",")).toISOString().split("T")[0];
+          let [year, month, day, hour, minute, second] = dateRegexp.exec(cel.v)[1].split(",");
+          if (month) month = String(Number(month) + 1);
+          if (cel.f.includes("/"))
+            // Date only
+            value = `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+          if (cel.f.includes(":"))
+            // Duration only
+            value = parseDuration(hour, minute);
         } else {
           value = cel.v || cel.f;
         }
