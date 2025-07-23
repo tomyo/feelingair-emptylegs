@@ -27,6 +27,7 @@
         font-size: 100%;
         line-height: 1.25;
         scroll-behavior: smooth;
+        accent-color: var(--brand-color);
       }
 
       /* Global styles */
@@ -80,16 +81,46 @@
       <a href="https://feelingair.com.ar" aria-label="Ir a la página principal de FeelingAir">
         <img id="logo" src="/assets/images/feelingair.svg" alt="feeling air logo" />
       </a>
-      <h2 style="font-weight: 400">Empty Legs</h2>
-      <h1 style="font-weight: 400">Próximos Vuelos</h1>
+      <h1 style="font-weight: 400">Empty Legs</h1>
+      <h2 style="font-weight: 400">Próximos Vuelos</h2>
       <!-- <theme-toggle>
         <img src="/assets/images/theme-toggle.png" width="15px" height="15px" />
       </theme-toggle> -->
     </header>
     <main>
-      <section id="trips">
-        <p style="text-align: center">...</p>
-      </section>
+      <trips-filter>
+        <section id="filters">
+          <form>
+            <label for="date">
+              <h3>A partir del</h3>
+              <!-- A partir del: -->
+              <input type="date" id="dateFrom" name="date" />
+            </label>
+            <details open>
+              <summary><h3>Origen</h3></summary>
+              <div id="origins">
+                <label>
+                  <input type="radio" name="origin" value="" checked />
+                  Todos
+                </label>
+              </div>
+            </details>
+
+            <details>
+              <summary><h3>Destino</h3></summary>
+              <div id="destinations">
+                <label>
+                  <input type="radio" name="destination" value="" checked />
+                  Todos
+                </label>
+              </div>
+            </details>
+          </form>
+        </section>
+        <section id="trips">
+          <p style="text-align: center">...</p>
+        </section>
+      </trips-filter>
     </main>
 
     <style>
@@ -111,6 +142,49 @@
         text-align: center;
         padding: 2rem; /* margin adds scroll */
         font-size: 0.7rem;
+      }
+
+      #filters {
+        text-align: center;
+
+        form {
+          display: flex;
+          flex-flow: column nowrap;
+          align-items: center;
+          gap: 1rem;
+          max-width: 60ch;
+          margin-inline: auto;
+
+          #origins,
+          #destinations {
+            display: flex;
+            flex-flow: row wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+          }
+
+          summary {
+            cursor: pointer;
+            margin: 1rem;
+
+            > * {
+              display: inline-block;
+              margin: 0;
+            }
+          }
+        }
+        label {
+          border-style: solid;
+          border-color: #222222;
+          border-width: 1px;
+          padding: 0.5rem;
+        }
+        label:hover {
+          background-color: color-mix(in srgb, currentcolor 10%, transparent);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
       }
 
       #trips {
@@ -183,5 +257,80 @@
       tripElement.data = trip;
       tripsElement.appendChild(tripElement);
     }
+
+    const tripEntries = [...document.getElementById("trips").querySelectorAll("trip-entry")];
+
+    // Get unique origins and destinations
+    const origins = [
+      ...new Set(
+        tripEntries
+          .filter((t) => !t.data?.hidden)
+          .map((t) => t.data?.origin)
+          .filter(Boolean)
+      ),
+    ].sort();
+    const destinations = [
+      ...new Set(
+        tripEntries
+          .filter((t) => !t.data?.hidden)
+          .map((t) => t.data?.destination)
+          .filter(Boolean)
+      ),
+    ].sort();
+
+    // Populate selects
+    const originContainer = document.getElementById("origins");
+    const destinationContainer = document.getElementById("destinations");
+
+    for (const o of origins) {
+      const i = document.createElement("input");
+      i.type = "radio";
+      i.name = "origin";
+      i.value = o;
+      const label = document.createElement("label");
+      label.textContent = o;
+      label.prepend(i);
+      originContainer.appendChild(label);
+    }
+    for (const d of destinations) {
+      const i = document.createElement("input");
+      i.type = "radio";
+      i.name = "destination";
+      i.value = d;
+      const label = document.createElement("label");
+      label.textContent = d;
+      label.prepend(i);
+      destinationContainer.appendChild(label);
+    }
+
+    // Populate date from input
+    const dateInput = document.getElementById("dateFrom");
+    if (tripEntries.length > 0) {
+      const earliestDate = new Date(Math.min(...tripEntries.map((t) => new Date(t.data.date_from_min))));
+      dateInput.value = earliestDate.toISOString().split("T")[0]; // Set to the earliest date
+    } else {
+      dateInput.value = now.toISOString().split("T")[0]; // Set to today
+    }
+
+    // Filter trips based on form inputs
+    const filterForm = document.querySelector("#filters form");
+    filterForm.addEventListener("change", () => {
+      const origin = document.querySelector('[name="origin"]:checked').value;
+      const destination = document.querySelector('[name="destination"]:checked').value;
+      const date = document.getElementById("dateFrom").value;
+      tripEntries.forEach((trip) => {
+        const tripData = trip.data;
+        const tripDate = new Date(tripData.date_from_min);
+        const isOriginMatch = !origin || tripData.origin === origin;
+        const isDestinationMatch = !destination || tripData.destination === destination;
+        const isDateMatch = !date || tripDate >= new Date(date);
+
+        if (isOriginMatch && isDestinationMatch && isDateMatch) {
+          trip.style.display = "block";
+        } else {
+          trip.style.display = "none";
+        }
+      });
+    });
   </script>
 </html>
