@@ -102,12 +102,13 @@
                       content: "Hoy";
                       position: absolute;
                       inset: 0;
-                      display: grid;
-                      place-content: center;
                       background-color: var(--background-color);
                       text-transform: uppercase;
                       z-index: 1;
                       border: 1px solid currentColor;
+                      text-align: inherit;
+                      align-content: center;
+                      padding: 0.5rem;
                     }
 
                     &::after {
@@ -176,12 +177,20 @@
       }
 
       #filters {
-        text-align: center;
+        --text-align: center;
+        --flex-direction: column;
+        text-align: var(--text-align);
+
+        @media (width >= 1024px) {
+          --flex-direction: row;
+          --text-align: left;
+        }
 
         form {
           display: flex;
-          flex-flow: column nowrap;
+          flex-flow: var(--flex-direction) nowrap;
           align-items: center;
+          justify-content: center;
           gap: 1rem;
           margin: 2rem;
 
@@ -190,6 +199,8 @@
             width: 10rem;
             padding: 0.5rem;
             text-transform: uppercase;
+            text-align: inherit;
+            font: inherit;
           }
 
           #origins,
@@ -267,7 +278,7 @@
           /* Cross browser styling */
           appearance: none;
           border-radius: 0;
-          text-align: center !important;
+          /* text-align: center !important; */
           width: 100%;
           color: currentColor;
           border: 1px solid currentColor;
