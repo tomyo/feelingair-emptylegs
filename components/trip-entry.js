@@ -121,7 +121,6 @@ customElements.define(
           display: block;
           padding: var(--padding);
           margin: 1rem;
-          border-radius: 0.5rem;
           min-width: min-content;
           text-align: center; /* Center CTA button */
 
