@@ -40,6 +40,7 @@
         --brand-color: #3c769f;
         --color-dark: #222222;
         --color-light: #f5f5f5;
+        --border-color: #003566;
         --color: var(--color-dark);
 
         --background-color: color-mix(in srgb, var(--brand-color) 15%, white);
@@ -81,7 +82,25 @@
       <trips-filter>
         <section id="filters">
           <form>
-            <label for="dateFrom">A partir de<span id="hideOnToday">l</span></label>
+
+            <label for="origin">Origen:</label>
+            <div id="origins">
+              <select-styled>
+                <select id="origin" name="origin" aria-label="Origen">
+                  <option value="" selected>Todos</option>
+                </select>
+              </select-styled>
+            </div>
+
+            <label for="destination">Destino:</label>
+            <div id="destinations">
+              <select-styled>
+                <select id="destination" name="destination" aria-label="Destino">
+                  <option value="" selected>Todos</option>
+                </select>
+              </select-styled>
+            </div>
+                        <label for="dateFrom">A partir de<span id="hideOnToday">l</span>:</label>
             <today-date-picker onclick="dateFrom.showPicker()">
               <input id="dateFrom" type="date" name="startDate" aria-label="Fecha de inicio" />
 
@@ -105,7 +124,8 @@
                       background-color: var(--background-color);
                       text-transform: uppercase;
                       z-index: 1;
-                      border: 1px solid currentColor;
+                      border: none;
+                      border-bottom: 1px solid var(--border-color);
                       text-align: inherit;
                       align-content: center;
                       padding: 0.5rem;
@@ -129,23 +149,6 @@
               </style>
             </today-date-picker>
 
-            <label for="origin">Origen</label>
-            <div id="origins">
-              <select-styled>
-                <select id="origin" name="origin" aria-label="Origen">
-                  <option value="" selected>Todos</option>
-                </select>
-              </select-styled>
-            </div>
-
-            <label for="destination">Destino</label>
-            <div id="destinations">
-              <select-styled>
-                <select id="destination" name="destination" aria-label="Destino">
-                  <option value="" selected>Todos</option>
-                </select>
-              </select-styled>
-            </div>
           </form>
         </section>
         <section id="trips">
@@ -169,9 +172,8 @@
 
       #hero {
         text-align: center;
-        padding: 7rem 2rem 2rem;
+        padding: 0.1rem 2rem 2rem;
         margin: 0 auto;
-        height: 30vh;
         background-color: var(--brand-color);
         color: var(--color-light);
       }
@@ -201,6 +203,8 @@
             text-transform: uppercase;
             text-align: inherit;
             font: inherit;
+            border: none;
+            border-bottom: 1px solid var(--border-color);
           }
 
           #origins,
@@ -281,8 +285,8 @@
           /* text-align: center !important; */
           width: 100%;
           color: currentColor;
-          border: 1px solid currentColor;
           background-color: transparent;
+          
         }
       }
     </style>
