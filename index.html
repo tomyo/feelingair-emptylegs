@@ -126,7 +126,7 @@
                       z-index: 1;
                       border: none;
                       border-bottom: 1px solid var(--border-color);
-                      text-align: inherit;
+                      text-align: start;
                       align-content: center;
                       padding: 0.5rem;
                     }
@@ -181,27 +181,29 @@
       #filters {
         --text-align: center;
         --flex-direction: column;
+        --form-items-align: stretch;
         text-align: var(--text-align);
 
         @media (width >= 1024px) {
           --flex-direction: row;
           --text-align: left;
+          --form-items-align: center
         }
 
         form {
           display: flex;
           flex-flow: var(--flex-direction) nowrap;
-          align-items: center;
+          align-items: var(--form-items-align);
           justify-content: center;
           gap: 1rem;
           margin: 2rem;
 
           input,
           select {
-            width: 10rem;
+            min-width: 10rem;
             padding: 0.5rem;
             text-transform: uppercase;
-            text-align: inherit;
+            text-align: start;
             font: inherit;
             border: none;
             border-bottom: 1px solid var(--border-color);
@@ -212,7 +214,7 @@
             display: flex;
             flex-flow: row wrap;
             align-items: center;
-            justify-content: center;
+            justify-content: stretch;
             gap: 0.5rem;
           }
 
@@ -264,6 +266,7 @@
 
       select-styled {
         position: relative;
+        width: 100%;
 
         &::after {
           content: "";
