@@ -18,7 +18,7 @@ customElements.define(
       const trip = this.data;
 
       this.innerHTML = /*html*/ `
-        <img src="${trip.plane_image}">
+        <img src="${trip.plane_image}" loading="lazy">
         <dl part="path">
           <dt part="origin term">Origen</dt>
           <dd part="origin description">${trip.origin}</dd>
