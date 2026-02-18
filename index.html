@@ -26,7 +26,6 @@
         font-size: 100%;
         line-height: 1.25;
         scroll-behavior: smooth;
-        accent-color: var(--brand-color);
       }
 
       /* Global styles */
@@ -37,13 +36,18 @@
       }
 
       :root {
-        --brand-color: #3c769f;
-        --color-dark: #222222;
-        --color-light: #f5f5f5;
-        --border-color: #003566;
-        --color: var(--color-dark);
-
-        --background-color: color-mix(in srgb, var(--brand-color) 15%, white);
+        --color-brand: oklch(50% 28% 238);
+        --color-primary: oklch(56% 40% 250);
+        --color-dark: oklch(25% 0% 90);
+        --color-border: oklch(33% 25% 253);
+        --color-light: oklch(97% 0% 90);
+        --color-neutral: oklch(57% 8% 253);
+        --color-font-primary: var(--color-border);
+        --color-font-neutral: var(--color-neutral);
+        
+        --color-font: var(--color-font-primary);
+        --color-background: var(--color-light);
+        --color: var(--color-font);
         color-scheme: light;
       }
       /* </theme> */
@@ -57,14 +61,31 @@
       }
 
       body {
-        font-family: Objective, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+        font-family: "Noto Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
           Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-        background-color: var(--background-color);
-        color: var(--color);
-
+        color: var(--color, var(--color-font));
+        background-color: var(--color-background);
         transition: all ease-in-out 0.2s;
+        accent-color: var(--color-brand);
       }
+
+      button, .button {
+        color: var(--color-light);
+        background-color: var(--color-primary);
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        text-align: center;
+      }
+
+      input, select {
+        color: var(--color-font-neutral);
+      }
+
     </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
 
     <script src="/components/today-date-picker.js" type="module"></script>
   </head>
@@ -100,7 +121,7 @@
                 </select>
               </select-styled>
             </div>
-                        <label for="dateFrom">A partir de<span id="hideOnToday">l</span>:</label>
+            <label for="dateFrom">A partir de<span id="hideOnToday">l</span>:</label>
             <today-date-picker onclick="dateFrom.showPicker()">
               <input id="dateFrom" type="date" name="startDate" aria-label="Fecha de inicio" />
 
@@ -111,6 +132,7 @@
 
                 today-date-picker {
                   position: relative;
+                  color: var(--color-neutral);
 
                   > * {
                     width: 100%;
@@ -121,11 +143,10 @@
                       content: "Hoy";
                       position: absolute;
                       inset: 0;
-                      background-color: var(--background-color);
-                      text-transform: uppercase;
+                      background-color: var(--color-background);
                       z-index: 1;
                       border: none;
-                      border-bottom: 1px solid var(--border-color);
+                      border-bottom: 1px solid var(--color-border);
                       text-align: start;
                       align-content: center;
                       padding: 0.5rem;
@@ -162,7 +183,7 @@
         text-align: center;
         padding: 2rem; /* margin adds scroll */
         font-size: 0.7rem;
-        background-color: var(--brand-color);
+        background-color: var(--color-brand);
         color: var(--color-light);
 
         #logo {
@@ -174,7 +195,7 @@
         text-align: center;
         padding: 0.1rem 2rem 2rem;
         margin: 0 auto;
-        background-color: var(--brand-color);
+        background-color: var(--color-brand);
         color: var(--color-light);
       }
 
@@ -203,11 +224,10 @@
           select {
             min-width: 10rem;
             padding: 0.5rem;
-            text-transform: uppercase;
             text-align: start;
             font: inherit;
             border: none;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--color-border);
           }
 
           #origins,
@@ -231,37 +251,73 @@
         }
       }
 
+      trip-entry:not([hidden]) {
+        display: flex;
+        flex-flow: column nowrap;
+        padding: 1rem 1rem 2rem;
+        box-shadow: 0 0.25rem 0.25rem 0 oklch(80% 0% 106);
+
+        [part~="path"] {
+          [part~="term"] {
+            font-size: .8rem;
+            margin-inline-start: 0.25rem;
+          }
+          [part~="description"] {
+            font-size: 2.25rem;
+            font-weight: 500;
+            color: var(--color-font-neutral);
+            margin: 0;
+          }
+        }
+
+        > hr {
+          width: 100%;
+          border-width: 0;
+          border-top-width: 1px;
+        }
+
+        &::part(item), [part~="item"] {
+          display: flex;
+          gap: 0.5rem;
+          margin-block: 0.5rem;
+
+          dd {
+            color: var(--color-font-neutral);
+          }
+
+          > * {
+            margin: 0;
+          }
+
+        }
+
+        &::part(button), [part="button"]:hover {
+          background-color: color-mix(in srgb, currentColor 10%, transparent);
+        }
+      }
+
       #trips {
         display: flex;
         flex-flow: column nowrap;
         max-width: 90ch;
         margin-inline: auto;
 
-        trip-entry:hover,
+        /* trip-entry:hover,
         trip-entry[open] {
           background-color: color-mix(in srgb, currentcolor 7%, transparent);
           transition-duration: 0.2s;
-        }
+        } */
 
-        trip-entry {
-          box-shadow: color-mix(in srgb, currentcolor, transparent) 0px 0px 0.6rem;
-
-          &::part(button) {
-            display: inline-block;
-            background-color: transparent;
-            color: currentColor;
-            border: solid 1px currentColor;
-            border-radius: 2px;
-            text-align: center;
-            text-decoration: none;
-            margin: 1rem 2px;
-            cursor: pointer;
-            padding: 1rem 1.5rem;
-            transition-duration: 0.2s;
-          }
-          &::part(button):hover {
-            background-color: color-mix(in srgb, currentColor 10%, transparent);
-          }
+        > time {
+          position: sticky;
+          top: 1rem;
+          margin-block: 1.5rem .5rem;
+          width: 12ch;
+          padding: .5rem 1rem;
+          color: var(--color-light);
+          background-color: var(--color-font-neutral);
+          margin-inline: auto;
+          text-align: center;
         }
       }
 
@@ -288,7 +344,6 @@
           border-radius: 0;
           /* text-align: center !important; */
           width: 100%;
-          color: currentColor;
           background-color: transparent;
           
         }
@@ -298,9 +353,25 @@
 
   <script type="module">
     import { getSheetData } from "/get-trips.js";
+
+    function formatSheetDate(isoDate, locale = navigator.language) {
+      // month from Google Sheets is typically 1–12; JS Date wants 0–11
+      const [year, month, day] = isoDate.split("-");
+      const utcDate = new Date(Date.UTC(year, month - 1, day));
+
+      return new Intl.DateTimeFormat(locale, {
+        timeZone: "UTC",        // key line: prevents day shifting
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      }).format(utcDate);
+    }
+
+
     const tripsElement = document.getElementById("trips");
     const fetchedTrips = await getSheetData();
     const now = new Date();
+    let lastDateAdded;
 
     tripsElement.innerHTML = ""; /* Clear loading message */
 
@@ -328,6 +399,13 @@
 
       const tripElement = document.createElement("trip-entry");
       tripElement.data = trip;
+      if (lastDateAdded != trip.date_from_min) {
+        const timeElement = document.createElement("time");
+        timeElement.textContent = formatSheetDate(trip.date_from_min);
+        timeElement.setAttribute("datetime", trip.date_from_min);
+        tripsElement.appendChild(timeElement);
+        lastDateAdded = trip.date_from_min;
+      }
       tripsElement.appendChild(tripElement);
     }
 
@@ -391,9 +469,9 @@
         const isDateMatch = !date || tripDate >= new Date(date);
 
         if (isOriginMatch && isDestinationMatch && isDateMatch) {
-          trip.style.display = "block";
+          trip.toggleAttribute("hidden", false);
         } else {
-          trip.style.display = "none";
+          trip.toggleAttribute("hidden", true);
         }
       });
     });
