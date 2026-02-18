@@ -82,6 +82,8 @@ async function getSheetData() {
             value = parseDuration(hour, minute);
         } else {
           value = cel.v || cel.f;
+          if (value === "FALSE") value = false;
+          if (value === "TRUE") value = true;
         }
       } catch (e) {
         var value = "";
