@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es-AR">
   <head>
     <meta name="theme-color" content="#3c769f" />
@@ -21,7 +21,6 @@
       html,
       body {
         margin: 0;
-        height: 100%;
         min-height: 100%;
         font-size: 100%;
         line-height: 1.25;
@@ -44,10 +43,12 @@
         --color-neutral: oklch(57% 8% 253);
         --color-font-primary: var(--color-border);
         --color-font-neutral: var(--color-neutral);
-        
         --color-font: var(--color-font-primary);
         --color-background: var(--color-light);
         --color: var(--color-font);
+        --font-family-main:
+          "Noto Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+          Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
         color-scheme: light;
       }
       /* </theme> */
@@ -61,15 +62,15 @@
       }
 
       body {
-        font-family: "Noto Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-          Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        font-family: var(--font-family-main, system-ui);
         color: var(--color, var(--color-font));
         background-color: var(--color-background);
         transition: all ease-in-out 0.2s;
         accent-color: var(--color-brand);
       }
 
-      button, .button {
+      button,
+      .button {
         color: var(--color-light);
         background-color: var(--color-primary);
         text-decoration: none;
@@ -77,15 +78,17 @@
         text-align: center;
       }
 
-      input, select {
+      input,
+      select {
         color: var(--color-font-neutral);
       }
-
     </style>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
 
     <script src="/components/today-date-picker.js" type="module"></script>
   </head>
@@ -103,7 +106,6 @@
       <trips-filter>
         <section id="filters">
           <form>
-
             <label for="origin">Origen:</label>
             <div id="origins">
               <select-styled>
@@ -169,12 +171,19 @@
                 }
               </style>
             </today-date-picker>
-
           </form>
         </section>
-        <section id="trips">
+        <section id="trips" loading>
           <p style="text-align: center">...</p>
         </section>
+        <div class="card" id="noResults">
+          <h3 part="title">No hay vuelos disponibles</h3>
+          <strong>No encontramos opciones para los criterios seleccionados.</strong>
+          <p>Nuestro equipo puede ayudarte a encontrar la mejor alternativa para tu viaje.</p>
+          <a part="button" class="button" href="https://api.whatsapp.com/send?phone=+5493525457917&text=">
+            Consultar con un asesor
+          </a>
+        </div>
       </trips-filter>
     </main>
 
@@ -189,6 +198,11 @@
         #logo {
           filter: invert(1);
         }
+      }
+
+      .card {
+        padding: 1rem 1rem 2rem;
+        box-shadow: 0 0.25rem 0.25rem 0 oklch(80% 0% 106);
       }
 
       #hero {
@@ -208,7 +222,7 @@
         @media (width >= 1024px) {
           --flex-direction: row;
           --text-align: left;
-          --form-items-align: center
+          --form-items-align: center;
         }
 
         form {
@@ -254,12 +268,10 @@
       trip-entry:not([hidden]) {
         display: flex;
         flex-flow: column nowrap;
-        padding: 1rem 1rem 2rem;
-        box-shadow: 0 0.25rem 0.25rem 0 oklch(80% 0% 106);
 
         [part~="path"] {
           [part~="term"] {
-            font-size: .8rem;
+            font-size: 0.8rem;
             margin-inline-start: 0.25rem;
           }
           [part~="description"] {
@@ -276,7 +288,8 @@
           border-top-width: 1px;
         }
 
-        &::part(item), [part~="item"] {
+        &::part(item),
+        [part~="item"] {
           display: flex;
           gap: 0.5rem;
           margin-block: 0.5rem;
@@ -288,10 +301,10 @@
           > * {
             margin: 0;
           }
-
         }
 
-        &::part(button), [part="button"]:hover {
+        &::part(button),
+        [part="button"]:hover {
           background-color: color-mix(in srgb, currentColor 10%, transparent);
         }
       }
@@ -311,13 +324,34 @@
         > time {
           position: sticky;
           top: 1rem;
-          margin-block: 1.5rem .5rem;
+          margin-block: 1.5rem 0.5rem;
           width: 12ch;
-          padding: .5rem 1rem;
+          padding: 0.5rem 1rem;
           color: var(--color-light);
           background-color: var(--color-font-neutral);
           margin-inline: auto;
           text-align: center;
+        }
+      }
+
+      #noResults {
+        #trips:not([loading]) ~ & {
+          display: grid;
+          text-align: center;
+          font-size: 0.8rem;
+        }
+
+        #trips[loading] ~ &,
+        #trips:has(trip-entry:not([hidden])) ~ & {
+          display: none;
+        }
+
+        & [part="title"] {
+          font-size: 2rem;
+        }
+
+        & [part="button"] {
+          font-size: initial;
         }
       }
 
@@ -345,7 +379,6 @@
           /* text-align: center !important; */
           width: 100%;
           background-color: transparent;
-          
         }
       }
     </style>
@@ -360,20 +393,19 @@
       const utcDate = new Date(Date.UTC(year, month - 1, day));
 
       return new Intl.DateTimeFormat(locale, {
-        timeZone: "UTC",        // key line: prevents day shifting
+        timeZone: "UTC", // key line: prevents day shifting
         year: "numeric",
         month: "2-digit",
         day: "2-digit",
       }).format(utcDate);
     }
-
-
     const tripsElement = document.getElementById("trips");
     const fetchedTrips = await getSheetData();
     const now = new Date();
     let lastDateAdded;
 
     tripsElement.innerHTML = ""; /* Clear loading message */
+    let timeHideCss = "";
 
     for (const trip of fetchedTrips) {
       if (trip.hidden) {
@@ -399,15 +431,27 @@
 
       const tripElement = document.createElement("trip-entry");
       tripElement.data = trip;
+      tripElement.setAttribute("date", trip.date_from_min);
       if (lastDateAdded != trip.date_from_min) {
         const timeElement = document.createElement("time");
         timeElement.textContent = formatSheetDate(trip.date_from_min);
         timeElement.setAttribute("datetime", trip.date_from_min);
         tripsElement.appendChild(timeElement);
         lastDateAdded = trip.date_from_min;
+        // Add css to hide time element when all corresponding trip-entry elements are hidden.
+        timeHideCss += `
+          time[datetime="${trip.date_from_min}"]:not(:has(~ trip-entry[date="${trip.date_from_min}"]:not([hidden]))) {
+            display: none;
+          }
+        `;
       }
+      tripElement.classList.add("card");
       tripsElement.appendChild(tripElement);
     }
+    tripsElement.removeAttribute("loading");
+    const style = document.createElement("style");
+    style.textContent = timeHideCss;
+    document.head.appendChild(style);
 
     const tripEntries = [...document.getElementById("trips").querySelectorAll("trip-entry")];
 
@@ -417,7 +461,7 @@
         tripEntries
           .filter((t) => !t.data?.hidden)
           .map((t) => t.data?.origin)
-          .filter(Boolean)
+          .filter(Boolean),
       ),
     ].sort();
     const destinations = [
@@ -425,7 +469,7 @@
         tripEntries
           .filter((t) => !t.data?.hidden)
           .map((t) => t.data?.destination)
-          .filter(Boolean)
+          .filter(Boolean),
       ),
     ].sort();
 
