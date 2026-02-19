@@ -492,16 +492,15 @@
 
     // Populate date from input
     const dateInput = document.getElementById("dateFrom");
-    if (tripEntries.length > 0) {
-      const earliestDate = new Date(Math.min(...tripEntries.map((t) => new Date(t.data.date_from_min))));
-      dateInput.value = earliestDate.toISOString().split("T")[0]; // Set to the earliest date
-    } else {
+    if (!dateInput.value) {
+      // Initialize input with today's date.
       dateInput.value = now.toISOString().split("T")[0]; // Set to today
     }
 
     // Filter trips based on form inputs
     const filterForm = document.querySelector("#filters form");
     filterForm.addEventListener("change", () => {
+      let resultsAvailable = false;
       const origin = originSelect.options[originSelect.selectedIndex].value;
       const destination = destinationSelect.options[destinationSelect.selectedIndex].value;
       const date = document.getElementById("dateFrom").value;
@@ -514,10 +513,19 @@
 
         if (isOriginMatch && isDestinationMatch && isDateMatch) {
           trip.toggleAttribute("hidden", false);
+          resultsAvailable = true;
         } else {
           trip.toggleAttribute("hidden", true);
         }
       });
+      if (!resultsAvailable) {
+        const noResultsButttonElement = document.querySelector("#noResults [part='button']");
+        const splitterWord = "text=";
+        const hrefBase = noResultsButttonElement.href.split(splitterWord)[0];
+        const whenMsg = date ? `del ${date}` : "de hoy";
+        const msg = `Hola! Estoy buscando un vuelo de ${origin} a ${destination} a partir ${whenMsg}`;
+        noResultsButttonElement.href = hrefBase + splitterWord + msg;
+      }
     });
   </script>
 </html>
