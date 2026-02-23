@@ -51,7 +51,7 @@
           "Noto Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
           Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
         color-scheme: light;
-        --max-width-container: 110ch;
+        --max-width-container: 120ch;
       }
       /* </theme> */
 
@@ -76,7 +76,7 @@
         color: var(--color-light);
         background-color: var(--color-primary);
         text-decoration: none;
-        padding: 0.5rem 1rem;
+        padding: 1rem 1.5rem;
         text-align: center;
       }
 
@@ -311,30 +311,32 @@
         }
 
         @media (width > 768px) {
-          grid-template-columns: 11rem 1fr 10rem;
+          grid-template-columns: 15rem 1fr 13rem;
           align-items: center;
           gap: 1rem;
 
           & [part~="path"] {
             display: grid;
             grid-template-columns: 1fr 1fr;
-          }
-
-          [part~="date-from"] {
-            display: flex !important;
-            background-color: color-mix(in srgb, var(--color-font-neutral) 50%, var(--color-light));
-            margin-inline-start: -1rem;
-            padding: 0.5rem;
-            padding-inline-start: 1rem;
-            dd {
-              color: var(--color-brand) !important;
-            }
+            margin: 0;
           }
 
           [part~="details"] {
             display: grid;
             grid-template-columns: 1fr 1.4fr;
             column-gap: 1rem;
+            margin: 0;
+
+            [part~="date-from"] {
+              display: flex !important;
+              background-color: color-mix(in srgb, var(--color-font-neutral) 50%, var(--color-light));
+              margin-inline-start: -1rem;
+              padding: 0.5rem;
+              padding-inline-start: 1rem;
+              dd {
+                color: var(--color-brand) !important;
+              }
+            }
           }
         }
 
@@ -354,7 +356,7 @@
             margin-inline-start: 0.25rem;
           }
           [part~="description"] {
-            font-size: 2.25rem;
+            font-size: 1.8rem;
             font-weight: 500;
             color: var(--color-font-neutral);
             margin: 0;
